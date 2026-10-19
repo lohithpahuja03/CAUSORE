@@ -221,11 +221,11 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 
 ---
 
-### ⬜ Phase 13 — Repository Cleanup & Release
-- [ ] Repository inspection and removal of obsolete/temporary artifacts.
-- [ ] Verification of project root cleanliness (only `frontend/`, `backend/`, `.gitignore`, `README.md`, `ROADMAP.md`, `BRAIN.md`).
-- [ ] Final verification of documentation consistency.
-- [ ] Full end-to-end integration validation.
-- [ ] Production build verification for both frontend and backend.
-- [ ] Final Git commit and GitHub push.
-- [ ] Project presentation summary.
+### ✅ Phase 13 — Completed
+- [x] Repository inspection and removal of obsolete/temporary artifacts.
+- [x] Verification of project root cleanliness (strictly adheres to Rule 1.1: ONLY `frontend/`, `backend/`, `.gitignore`, `README.md`, `ROADMAP.md`, `BRAIN.md`).
+- [x] Final verification of documentation consistency across README.md, BRAIN.md, and ROADMAP.md.
+- [x] Full end-to-end integration validation across all 35 backend tests and Next.js static generation.
+- [x] Production build verification for both frontend (`npm run build`) and backend (Python 3.14 async runtime).
+- [x] Final Git commit and GitHub push to remote `main`.
+- [x] Project presentation summary completed.
