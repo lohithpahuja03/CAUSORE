@@ -28,8 +28,8 @@ export default function IncidentMetadataForm({
       {/* Sample Loader Banner */}
       <div style={{
         padding: '0.85rem 1.25rem',
-        backgroundColor: 'rgba(59, 130, 246, 0.08)',
-        border: '1px solid rgba(59, 130, 246, 0.25)',
+        backgroundColor: 'rgba(234, 179, 8, 0.1)',
+        border: '1px solid rgba(234, 179, 8, 0.3)',
         borderRadius: '8px',
         display: 'flex',
         alignItems: 'center',
@@ -38,7 +38,7 @@ export default function IncidentMetadataForm({
         gap: '0.75rem'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-          <span className="badge badge-inferred" style={{ fontSize: '0.7rem' }}>Demo Helper</span>
+          <span className="badge badge-yellow" style={{ fontSize: '0.7rem' }}>Demo Helper</span>
           <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
             Want to test CAUSORE with a pre-configured production outage?
           </span>

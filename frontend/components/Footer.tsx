@@ -22,21 +22,25 @@ export default function Footer() {
         }}>
           {/* Brand Info */}
           <div style={{ gridColumn: 'span 2' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
               <div style={{
-                width: '28px',
-                height: '28px',
+                position: 'relative',
+                width: '32px',
+                height: '32px',
                 borderRadius: '6px',
-                backgroundColor: 'var(--brand-primary)',
+                backgroundColor: '#12151b',
+                border: '1px solid #eab308',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: '#fff'
+                color: '#facc15',
+                boxShadow: '0 0 10px rgba(234, 179, 8, 0.4)',
+                animation: 'logo-pulse 3s ease-in-out infinite',
               }}>
-                <Terminal size={16} />
+                <Terminal size={16} strokeWidth={2.5} color="#facc15" />
               </div>
-              <span style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>
-                CAUSORE
+              <span style={{ fontSize: '1.15rem', fontWeight: 800, color: '#ffffff', fontFamily: 'var(--font-mono)' }}>
+                CAUS<span style={{ color: '#eab308' }}>ORE</span>
               </span>
             </div>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', maxWidth: '320px', lineHeight: 1.6, marginBottom: '1.25rem' }}>

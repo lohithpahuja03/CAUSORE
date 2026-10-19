@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import FloatingCreativeWidget from '../components/FloatingCreativeWidget';
 
 export const metadata: Metadata = {
   title: 'CAUSORE — Evidence-Driven Incident Investigation Platform',
@@ -32,6 +33,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-grid">
         {children}
+        <FloatingCreativeWidget />
       </body>
     </html>
   );
