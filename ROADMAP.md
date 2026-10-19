@@ -179,8 +179,8 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 
 ---
 
-### ⬜ Phase 10 — Investigation Report Generation & Export
-- [ ] Automated generation of comprehensive RCA documents:
+### ✅ Phase 10 — Completed
+- [x] Automated generation of comprehensive RCA documents:
   - Executive Incident Summary.
   - Key Findings (`OBSERVED` vs `INFERRED`).
   - Timeline of Critical Events.
@@ -188,10 +188,11 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
   - Blast Radius & Impact Assessment.
   - Telemetry Gaps & Unmonitored Blindspots.
   - Action Items & Verification Steps.
-- [ ] Export generators:
+- [x] Export generators:
   - Formatted Markdown export (`.md`).
   - Structured machine-readable JSON export (`.json`).
-  - Print/PDF export template.
+  - Print/PDF export template with clean, print-optimized HTML styling.
+- [x] Unit test suite covering markdown, JSON, and HTML report generation.
 
 ---
 
