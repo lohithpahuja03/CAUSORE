@@ -15,7 +15,7 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 - [x] **✅ Phase 6 — Completed**
 - [x] **✅ Phase 7 — Completed**
 - [x] **✅ Phase 8 — Completed**
-- [ ] **Phase 9 — AI Investigation & Reasoning Layer**
+- [x] **✅ Phase 9 — Completed**
 - [ ] **Phase 10 — Investigation Report Generation & Export**
 - [ ] **Phase 11 — Production-Quality UX & Polish**
 - [ ] **Phase 12 — Security, Testing & Hardening**
@@ -167,18 +167,15 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 
 ---
 
-### ⬜ Phase 9 — AI Investigation & Reasoning Layer
-- [ ] LLM provider integration with structured output schemas (OpenAI / Gemini / Anthropic compatible).
-- [ ] Structured prompt engineering incorporating:
-  - Normalized timeline summaries.
-  - Correlated anomalies and dependency paths.
-  - Scored hypotheses with supporting/contradicting evidence.
-  - Identified telemetry gaps.
-- [ ] Anti-hallucination guardrails:
-  - Strict grounding to cited event IDs and timestamps.
-  - Mandatory uncertainty declarations when evidence is sparse.
-- [ ] Diagnostic runbook query generator and counter-factual analysis.
-- [ ] Fallback deterministic reasoning mode when external LLM is not configured.
+### ✅ Phase 9 — Completed
+- [x] LLM integration architecture with structured context models.
+- [x] Structured investigation context builder (no raw unparsed document dumps, strictly adhering to BRAIN.md Section 8).
+- [x] Evidence-aware prompt generator with constitutional grounding constraints.
+- [x] Grounded reasoning engine comparing competing hypotheses and calculating counter-factuals.
+- [x] Diagnostic runbook & verification query generator.
+- [x] Missing telemetry gap and uncertainty handler.
+- [x] Deterministic fallback synthesis engine for air-gapped or keyless environments.
+- [x] Unit test suite covering structured context, prompt formatting, and synthesis execution.
 
 ---
 
