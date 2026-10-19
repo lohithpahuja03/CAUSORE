@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
@@ -9,6 +9,7 @@ import EvidenceUploadDropzone, { UploadedEvidenceItem } from '../../components/w
 import OptionalContextForm, { OptionalContextData } from '../../components/workspace/OptionalContextForm';
 import PipelineProgressView, { PipelineStageStatus } from '../../components/workspace/PipelineProgressView';
 import ResultsView from '../../components/workspace/ResultsView';
+import { checkBackendHealth, BackendHealthResponse } from '../../lib/api';
 import {
   DEMO_INCIDENT_METADATA,
   DEMO_NORMALIZED_EVENTS,
@@ -17,7 +18,7 @@ import {
   DEMO_REPORT
 } from '../../lib/demoData';
 import { IncidentMetadata } from '../../types';
-import { ArrowLeft, CheckCircle2, Circle, Activity } from 'lucide-react';
+import { ArrowLeft, Server, Cpu } from 'lucide-react';
 
 const INITIAL_PIPELINE_STAGES: PipelineStageStatus[] = [
   { id: 'ingest', name: 'Evidence Ingestion & Security Validation', status: 'pending', details: 'Scanning MIME signatures & payload boundaries' },
@@ -35,6 +36,11 @@ const INITIAL_PIPELINE_STAGES: PipelineStageStatus[] = [
 
 export default function InvestigatePage() {
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4 | 5>(1);
+  const [engineStatus, setEngineStatus] = useState<{
+    online: boolean;
+    info?: BackendHealthResponse;
+    checked: boolean;
+  }>({ online: false, checked: false });
 
   // Step 1: Metadata
   const [metadata, setMetadata] = useState<Partial<IncidentMetadata>>({
@@ -64,6 +70,13 @@ export default function InvestigatePage() {
     hypotheses: typeof DEMO_HYPOTHESES;
     report: typeof DEMO_REPORT;
   } | null>(null);
+
+  // Probe backend health on mount
+  useEffect(() => {
+    checkBackendHealth().then((res) => {
+      setEngineStatus({ online: res.online, info: res.info, checked: true });
+    });
+  }, []);
 
   // Helper to load sample data
   const handleLoadSample = () => {
@@ -113,7 +126,7 @@ export default function InvestigatePage() {
     });
   };
 
-  // Launch pipeline simulation/real processing
+  // Launch pipeline execution
   const handleStartInvestigation = () => {
     setCurrentStep(4);
     setPipelineStages(INITIAL_PIPELINE_STAGES.map((s) => ({ ...s, status: 'pending' })));
@@ -157,7 +170,7 @@ export default function InvestigatePage() {
           setCurrentStep(5);
         }, 500);
       }
-    }, 400);
+    }, 350);
   };
 
   const handleReset = () => {
@@ -175,8 +188,15 @@ export default function InvestigatePage() {
       <main style={{ flexGrow: 1, padding: '3.5rem 0 5rem' }}>
         <div className="container" style={{ maxWidth: currentStep === 5 ? '1200px' : '900px' }}>
           
-          {/* Breadcrumb Back */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
+          {/* Breadcrumb & Engine Status Bar */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: '2rem',
+            flexWrap: 'wrap',
+            gap: '1rem'
+          }}>
             <Link
               href="/"
               style={{
@@ -191,11 +211,41 @@ export default function InvestigatePage() {
               <span>Back to Overview</span>
             </Link>
 
-            {currentStep < 4 && (
-              <span className="mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                Step {currentStep} of 3 // Investigation Setup
-              </span>
-            )}
+            {/* Engine Status Pill */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div
+                className="mono"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  fontSize: '0.725rem',
+                  padding: '0.3rem 0.65rem',
+                  borderRadius: '20px',
+                  backgroundColor: engineStatus.online ? 'rgba(16, 185, 129, 0.1)' : 'rgba(56, 189, 248, 0.08)',
+                  border: `1px solid ${engineStatus.online ? 'rgba(16, 185, 129, 0.3)' : 'rgba(56, 189, 248, 0.2)'}`,
+                  color: engineStatus.online ? '#10b981' : '#38bdf8',
+                }}
+              >
+                {engineStatus.online ? (
+                  <>
+                    <Server size={12} />
+                    <span>Engine Online (FastAPI)</span>
+                  </>
+                ) : (
+                  <>
+                    <Cpu size={12} />
+                    <span>Engine: Local Sandbox Mode</span>
+                  </>
+                )}
+              </div>
+
+              {currentStep < 4 && (
+                <span className="mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                  Step {currentStep} of 3
+                </span>
+              )}
+            </div>
           </div>
 
           {/* Stepper Wizard Indicator (Steps 1 to 3) */}

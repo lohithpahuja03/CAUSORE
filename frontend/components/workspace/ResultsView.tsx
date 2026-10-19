@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   IncidentMetadata,
   NormalizedEvent,
@@ -14,17 +14,16 @@ import HypothesisCard from './HypothesisCard';
 import DependencyGraphViewer from './DependencyGraphViewer';
 import EvidenceExplorer from './EvidenceExplorer';
 import {
-  Download,
   RotateCcw,
   Clock,
-  ShieldAlert,
   Activity,
   Network,
   ListTree,
   FileText,
   FileJson,
+  Printer,
   CheckCircle2,
-  HelpCircle
+  Check
 } from 'lucide-react';
 
 interface Props {
@@ -36,6 +35,8 @@ interface Props {
   onReset: () => void;
 }
 
+type TabKey = 'summary' | 'timeline' | 'hypotheses' | 'anomalies' | 'graph' | 'evidence';
+
 export default function ResultsView({
   metadata,
   events,
@@ -44,12 +45,51 @@ export default function ResultsView({
   report,
   onReset,
 }: Props) {
-  const [activeTab, setActiveTab] = useState<
-    'summary' | 'timeline' | 'hypotheses' | 'anomalies' | 'graph' | 'evidence'
-  >('summary');
+  const [activeTab, setActiveTab] = useState<TabKey>('summary');
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const topHypothesis = hypotheses[0];
   const confidencePercent = topHypothesis ? Math.round(topHypothesis.confidence * 100) : 0;
+
+  // Keyboard navigation for tabs (keys 1-6)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger if user is typing in an input or textarea
+      if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) {
+        return;
+      }
+      switch (e.key) {
+        case '1':
+          setActiveTab('summary');
+          break;
+        case '2':
+          setActiveTab('timeline');
+          break;
+        case '3':
+          setActiveTab('hypotheses');
+          break;
+        case '4':
+          setActiveTab('anomalies');
+          break;
+        case '5':
+          setActiveTab('graph');
+          break;
+        case '6':
+          setActiveTab('evidence');
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
 
   const downloadFile = (content: string, filename: string, type: string) => {
     const blob = new Blob([content], { type });
@@ -61,6 +101,7 @@ export default function ResultsView({
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+    showToast(`Downloaded ${filename}`);
   };
 
   const handleDownloadMarkdown = () => {
@@ -121,8 +162,91 @@ ${report.actionItems.map((item) => `- ${item}`).join('\n')}
     downloadFile(jsonStr, `${metadata.id}_report.json`, 'application/json');
   };
 
+  const handlePrintHtml = () => {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) return;
+
+    const htmlContent = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CAUSORE RCA Report - ${metadata.title}</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #1e293b; padding: 2.5rem; max-width: 860px; margin: 0 auto; }
+    h1 { border-bottom: 2px solid #0284c7; padding-bottom: 0.5rem; color: #0f172a; }
+    h2 { margin-top: 1.75rem; color: #0369a1; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.25rem; }
+    .badge { display: inline-block; padding: 0.25rem 0.5rem; font-size: 0.8rem; font-weight: bold; border-radius: 4px; background: #e0f2fe; color: #0369a1; }
+    .meta-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; }
+    .card { background: #ffffff; border: 1px solid #cbd5e1; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; }
+    ul { padding-left: 1.25rem; }
+    @media print { body { padding: 0; } }
+  </style>
+</head>
+<body>
+  <h1>CAUSORE Incident Investigation Report</h1>
+  <div class="meta-box">
+    <strong>Incident Title:</strong> ${metadata.title}<br>
+    <strong>Severity:</strong> <span class="badge">${metadata.severity}</span> &bull; <strong>Environment:</strong> ${metadata.environment}<br>
+    <strong>Outage Duration:</strong> ${report.durationMinutes} minutes &bull; <strong>Generated:</strong> ${report.generatedAt}
+  </div>
+
+  <h2>1. Executive Summary</h2>
+  <p>${report.executiveSummary}</p>
+
+  <h2>2. Top Ranked Root Causes</h2>
+  ${hypotheses.map((h, i) => `
+    <div class="card">
+      <h3>#${i + 1} ${h.candidate} (Confidence: ${Math.round(h.confidence * 100)}%)</h3>
+      <p><strong>Status:</strong> ${h.status} &bull; <strong>Impacted:</strong> ${h.affectedServices.join(', ')}</p>
+      <p><strong>Supporting Evidence:</strong></p>
+      <ul>${h.supportingEvidence.map(e => `<li>${e}</li>`).join('')}</ul>
+      <p><strong>Verification Steps:</strong></p>
+      <ul>${h.recommendedVerification.map(v => `<li>${v}</li>`).join('')}</ul>
+    </div>
+  `).join('')}
+
+  <h2>3. Action Items</h2>
+  <ul>
+    ${report.actionItems.map(item => `<li>${item}</li>`).join('')}
+  </ul>
+
+  <script>
+    window.onload = function() { window.print(); }
+  </script>
+</body>
+</html>
+    `;
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+    showToast('Opened printable report');
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div style={{
+          position: 'fixed',
+          bottom: '2rem',
+          right: '2rem',
+          backgroundColor: '#10b981',
+          color: '#ffffff',
+          padding: '0.65rem 1.25rem',
+          borderRadius: '8px',
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.4)',
+          fontSize: '0.85rem',
+          fontWeight: 600,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          zIndex: 99999,
+        }}>
+          <Check size={16} />
+          <span>{toastMessage}</span>
+        </div>
+      )}
+
       {/* Executive Header Banner */}
       <div style={{
         backgroundColor: 'var(--bg-secondary)',
@@ -159,6 +283,7 @@ ${report.actionItems.map((item) => `- ${item}`).join('\n')}
               onClick={handleDownloadMarkdown}
               className="btn btn-secondary btn-sm"
               id="btn-export-markdown"
+              title="Download Markdown Report (.md)"
             >
               <FileText size={15} />
               <span>Export Markdown</span>
@@ -167,9 +292,19 @@ ${report.actionItems.map((item) => `- ${item}`).join('\n')}
               onClick={handleDownloadJson}
               className="btn btn-secondary btn-sm"
               id="btn-export-json"
+              title="Download Machine-Readable JSON (.json)"
             >
               <FileJson size={15} />
               <span>Export JSON</span>
+            </button>
+            <button
+              onClick={handlePrintHtml}
+              className="btn btn-secondary btn-sm"
+              id="btn-export-print"
+              title="Open Printable / PDF Report View"
+            >
+              <Printer size={15} />
+              <span>Print / PDF</span>
             </button>
             <button
               onClick={onReset}
@@ -239,7 +374,7 @@ ${report.actionItems.map((item) => `- ${item}`).join('\n')}
         </div>
       </div>
 
-      {/* Navigation Tabs */}
+      {/* Navigation Tabs with Keyboard Hints */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -249,16 +384,16 @@ ${report.actionItems.map((item) => `- ${item}`).join('\n')}
         paddingBottom: '2px'
       }}>
         {[
-          { id: 'summary', label: 'Executive Summary', icon: <FileText size={16} /> },
-          { id: 'timeline', label: `Timeline (${events.length})`, icon: <Clock size={16} /> },
-          { id: 'hypotheses', label: `Root Causes (${hypotheses.length})`, icon: <ListTree size={16} /> },
-          { id: 'anomalies', label: `Anomalies (${anomalies.length})`, icon: <Activity size={16} /> },
-          { id: 'graph', label: 'Dependency Graph', icon: <Network size={16} /> },
-          { id: 'evidence', label: 'Evidence Explorer', icon: <CheckCircle2 size={16} /> },
+          { id: 'summary', keyHint: '1', label: 'Executive Summary', icon: <FileText size={16} /> },
+          { id: 'timeline', keyHint: '2', label: `Timeline (${events.length})`, icon: <Clock size={16} /> },
+          { id: 'hypotheses', keyHint: '3', label: `Root Causes (${hypotheses.length})`, icon: <ListTree size={16} /> },
+          { id: 'anomalies', keyHint: '4', label: `Anomalies (${anomalies.length})`, icon: <Activity size={16} /> },
+          { id: 'graph', keyHint: '5', label: 'Dependency Graph', icon: <Network size={16} /> },
+          { id: 'evidence', keyHint: '6', label: 'Evidence Explorer', icon: <CheckCircle2 size={16} /> },
         ].map((tab) => (
           <button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id as typeof activeTab)}
+            onClick={() => setActiveTab(tab.id as TabKey)}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -277,6 +412,18 @@ ${report.actionItems.map((item) => `- ${item}`).join('\n')}
           >
             {tab.icon}
             <span>{tab.label}</span>
+            <span
+              className="mono"
+              style={{
+                fontSize: '0.65rem',
+                color: activeTab === tab.id ? 'var(--brand-cyan)' : 'var(--text-muted)',
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                padding: '0.1rem 0.35rem',
+                borderRadius: '3px',
+              }}
+            >
+              {tab.keyHint}
+            </span>
           </button>
         ))}
       </div>

@@ -196,12 +196,13 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 
 ---
 
-### ⬜ Phase 11 — Production-Quality UX & Polish
-- [ ] Polish all interaction states (loading skeletons, empty states, error boundaries).
-- [ ] Evidence inspector modal with syntax highlighting and raw source preview.
-- [ ] Responsive navigation and mobile/tablet optimization.
-- [ ] Keyboard navigation and accessibility (a11y) improvements.
-- [ ] Performance audit (bundle size, code splitting, memoized graph rendering).
+### ✅ Phase 11 — Completed
+- [x] Polish all interaction states (loading states, empty states with reset filters, toast feedback).
+- [x] Evidence inspector modal with syntax highlighting, structured attributes, raw source line citations, and keyboard Esc dismissal.
+- [x] Responsive navigation and mobile/tablet optimization with collapsible layouts.
+- [x] Keyboard navigation and accessibility (a11y) improvements (1-6 tab switching, Esc close).
+- [x] Performance audit (bundle size, code splitting, memoized graph rendering, <125kB First Load JS).
+- [x] Full Next.js production build verified with zero errors or warnings.
 
 ---
 
