@@ -13,8 +13,8 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = "development"
     DEBUG: bool = True
 
-    # Database
-    DATABASE_URL: str = "sqlite+aiosqlite:///./causore.db"
+    # Database (Stored safely inside backend/)
+    DATABASE_URL: str = "sqlite+aiosqlite:///backend/causore.db"
 
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [

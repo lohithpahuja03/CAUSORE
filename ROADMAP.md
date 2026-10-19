@@ -9,7 +9,7 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 - [x] **✅ Phase 0 — Completed**
 - [x] **✅ Phase 1 — Completed**
 - [x] **✅ Phase 2 — Completed**
-- [ ] **Phase 3 — Backend Foundation & Storage**
+- [x] **✅ Phase 3 — Completed**
 - [ ] **Phase 4 — Evidence Ingestion & Parsing Engine**
 - [ ] **Phase 5 — Incident Timeline Engine**
 - [ ] **Phase 6 — Anomaly Detection Engine**
@@ -76,20 +76,34 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 
 ---
 
-### ⬜ Phase 3 — Backend Foundation & Storage
-- [ ] Python FastAPI application scaffolding with modular architecture.
-- [ ] Database configuration (PostgreSQL with SQLAlchemy 2.0 async engine and Alembic migrations; SQLite fallback for local testability).
-- [ ] Core database schemas:
+### ✅ Phase 3 — Completed
+- [x] Python FastAPI application scaffolding with modular architecture.
+- [x] Database configuration (SQLAlchemy 2.0 async engine and sessionmaker; SQLite + aiosqlite for zero-friction dev/testing; PostgreSQL ready).
+- [x] Core database schemas:
   - `investigations`: Incident metadata, status, time windows, confidence scores.
   - `evidence_files`: File metadata, hashes, MIME types, processing statuses.
   - `normalized_events`: Extracted events with UTC timestamps, services, levels, structured attributes.
   - `anomalies`: Detected statistical outliers, error spikes, latency anomalies.
-  - `services` & `service_dependencies`: Service graph topology.
+  - `service_dependencies`: Service graph topology.
   - `deployments`: Deployment change logs.
   - `hypotheses`: Generated root-cause candidates with evidence score breakdowns.
   - `reports`: Final RCA structured documents.
-- [ ] Investigation CRUD REST APIs.
-- [ ] Health check and system observability endpoints.
+- [x] Complete Investigation CRUD REST APIs:
+  - `POST /api/investigations`
+  - `GET /api/investigations`
+  - `GET /api/investigations/{id}`
+  - `DELETE /api/investigations/{id}`
+  - `POST /api/investigations/{id}/evidence`
+  - `GET /api/investigations/{id}/evidence`
+  - `GET /api/investigations/{id}/status`
+  - `GET /api/investigations/{id}/timeline`
+  - `GET /api/investigations/{id}/anomalies`
+  - `GET /api/investigations/{id}/hypotheses`
+  - `GET /api/investigations/{id}/report`
+  - `POST /api/investigations/seed-sample`
+- [x] Pydantic v2 schemas for all requests, responses, and validation.
+- [x] Lifespan database initialization and automated migration handling.
+- [x] Comprehensive database integration test suite.
 
 ---
 
