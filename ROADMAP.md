@@ -11,7 +11,7 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 - [x] **✅ Phase 2 — Completed**
 - [x] **✅ Phase 3 — Completed**
 - [x] **✅ Phase 4 — Completed**
-- [ ] **Phase 5 — Incident Timeline Engine**
+- [x] **✅ Phase 5 — Completed**
 - [ ] **Phase 6 — Anomaly Detection Engine**
 - [ ] **Phase 7 — Dependency & Cross-Evidence Correlation Engine**
 - [ ] **Phase 8 — Root-Cause Hypothesis Engine**
@@ -121,13 +121,13 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 
 ---
 
-### 5 ⬜ Phase 5 — Incident Timeline Engine
-- [ ] Chronological sequencing engine.
-- [ ] Incident window filter (pre-incident baseline, during-incident active window, post-incident stabilization).
-- [ ] Event grouping and fingerprinting (error pattern normalization, clustering similar stack traces).
-- [ ] Event categorization (deployment, config_change, error, warning, state_change).
-- [ ] Timeline query API with search, service filtering, and level filtering.
-- [ ] Frontend integration with interactive Timeline component.
+### ✅ Phase 5 — Completed
+- [x] Normalized event model with UTC ISO-8601 timestamps and source line references.
+- [x] Chronological sequencing engine.
+- [x] Incident window filter (pre-incident baseline, during-incident active window, post-incident stabilization).
+- [x] Event grouping and fingerprinting (error pattern normalization, clustering similar stack traces).
+- [x] Service and severity distribution tracking across window partitions.
+- [x] Comprehensive test suite covering timeline windowing and error fingerprint clustering.
 
 ---
 
