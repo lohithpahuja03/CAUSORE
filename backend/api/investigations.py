@@ -11,6 +11,11 @@ from sqlalchemy import select, func, desc, delete
 from sqlalchemy.orm import selectinload
 
 from backend.core.database import get_db
+from backend.core.security import (
+    sanitize_and_validate_filename,
+    validate_file_size,
+    validate_mime_type,
+)
 from backend.models.database import (
     InvestigationModel,
     EvidenceFileModel,
@@ -202,7 +207,12 @@ async def upload_evidence_metadata(
     source_type: str = "log",
     db: AsyncSession = Depends(get_db)
 ):
-    """Register evidence file metadata associated with an investigation."""
+    """Register evidence file metadata associated with an investigation with security checks."""
+    # Enforce strict security validations (path traversal, size bounds, MIME types)
+    clean_filename = sanitize_and_validate_filename(filename)
+    clean_size = validate_file_size(file_size_bytes)
+    clean_mime = validate_mime_type(mime_type)
+
     query = select(InvestigationModel).where(InvestigationModel.id == investigation_id)
     res = await db.execute(query)
     inv = res.scalar_one_or_none()
@@ -215,9 +225,9 @@ async def upload_evidence_metadata(
 
     evidence = EvidenceFileModel(
         investigation_id=investigation_id,
-        filename=filename,
-        file_size_bytes=file_size_bytes,
-        mime_type=mime_type,
+        filename=clean_filename,
+        file_size_bytes=clean_size,
+        mime_type=clean_mime,
         source_type=source_type,
         status="uploaded"
     )
