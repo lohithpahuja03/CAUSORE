@@ -12,7 +12,7 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 - [x] **✅ Phase 3 — Completed**
 - [x] **✅ Phase 4 — Completed**
 - [x] **✅ Phase 5 — Completed**
-- [ ] **Phase 6 — Anomaly Detection Engine**
+- [x] **✅ Phase 6 — Completed**
 - [ ] **Phase 7 — Dependency & Cross-Evidence Correlation Engine**
 - [ ] **Phase 8 — Root-Cause Hypothesis Engine**
 - [ ] **Phase 9 — AI Investigation & Reasoning Layer**
@@ -131,13 +131,13 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 
 ---
 
-### ⬜ Phase 6 — Anomaly Detection Engine
-- [ ] Statistical error frequency analysis (spike detection, baseline deviation).
-- [ ] Rate-of-change and z-score anomaly detector.
-- [ ] Scikit-learn integration for log pattern density / isolation forest outlier scoring.
-- [ ] Error cliff detection (sudden drop in 200 OKs vs sudden spike in 5xx errors).
-- [ ] Anomaly ranking and severity assignment.
-- [ ] Anomaly REST APIs and frontend visualization.
+### ✅ Phase 6 — Completed
+- [x] Statistical error-rate and frequency analysis with time-bucketed aggregation.
+- [x] Rolling Z-score anomaly detector for sudden error spikes (2-sigma 95% threshold).
+- [x] Traffic volume cliff and throughput drop detection.
+- [x] Anomaly scoring (0.0 to 1.0) and ranking by severity.
+- [x] Scikit-learn and NumPy integration for empirical statistical analysis.
+- [x] Unit test suite covering error surge detection, baseline deviation, and volume cliffs.
 
 ---
 
