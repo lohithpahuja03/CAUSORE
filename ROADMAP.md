@@ -10,7 +10,7 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 - [x] **✅ Phase 1 — Completed**
 - [x] **✅ Phase 2 — Completed**
 - [x] **✅ Phase 3 — Completed**
-- [ ] **Phase 4 — Evidence Ingestion & Parsing Engine**
+- [x] **✅ Phase 4 — Completed**
 - [ ] **Phase 5 — Incident Timeline Engine**
 - [ ] **Phase 6 — Anomaly Detection Engine**
 - [ ] **Phase 7 — Dependency & Cross-Evidence Correlation Engine**
@@ -107,16 +107,17 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 
 ---
 
-### ⬜ Phase 4 — Evidence Ingestion & Parsing Engine
-- [ ] File validation pipeline: MIME sniffing, extension whitelisting, size limits, security checks.
-- [ ] Parsers:
+### ✅ Phase 4 — Completed
+- [x] File validation pipeline: MIME sniffing, extension whitelisting, size limits, security checks.
+- [x] Parsers:
   - Structured log parser (JSON, JSONL).
-  - Standard syslog and common server log parser (Nginx, Apache, standard stdout).
-  - CSV log parser.
-  - PDF document extractor (incident summaries, post-mortems).
-  - Visual evidence OCR / metadata processor (screenshots).
-- [ ] Timestamp extractor and normalizer (resolves arbitrary timezone representations to UTC ISO-8601).
-- [ ] Canonical event normalizer mapping raw log records into standard `NormalizedEvent` records with source traceability.
+  - Standard syslog, Nginx access logs, and application stdout log parser with multiline traceback grouping.
+  - CSV tabular telemetry and metric parser.
+  - PDF document extractor for incident post-mortems and runbooks.
+  - Parser dispatcher with automatic file-format routing.
+- [x] Canonical timestamp extractor and normalizer (resolves arbitrary timezones, ISO, syslog, nginx, epoch to UTC ISO-8601).
+- [x] Canonical event normalizer mapping raw log records into standard `ParsedRecord` entities with source line traceability.
+- [x] Comprehensive test suite covering all ingestion parsers and timestamp normalizers.
 
 ---
 
