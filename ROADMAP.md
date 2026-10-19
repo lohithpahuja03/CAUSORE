@@ -14,7 +14,7 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 - [x] **✅ Phase 5 — Completed**
 - [x] **✅ Phase 6 — Completed**
 - [x] **✅ Phase 7 — Completed**
-- [ ] **Phase 8 — Root-Cause Hypothesis Engine**
+- [x] **✅ Phase 8 — Completed**
 - [ ] **Phase 9 — AI Investigation & Reasoning Layer**
 - [ ] **Phase 10 — Investigation Report Generation & Export**
 - [ ] **Phase 11 — Production-Quality UX & Polish**
@@ -152,16 +152,18 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 
 ---
 
-### ⬜ Phase 8 — Root-Cause Hypothesis Engine
-- [ ] Candidate cause generation from correlated anomaly clusters and dependency chains.
-- [ ] Deterministic evidence scoring:
-  - Supporting evidence tally and weight.
-  - Contradicting evidence tally and weight.
-  - Missing evidence identification (checking if critical telemetry streams are absent).
-- [ ] Status assignment: `OBSERVED`, `CORRELATED`, `INFERRED`, `UNKNOWN`.
-- [ ] Confidence calculation based on evidence density and corroboration.
-- [ ] Ranking and sorting competing hypotheses.
-- [ ] Generation of concrete verification action items.
+### ✅ Phase 8 — Completed
+- [x] Candidate cause generation engine evaluating competing causal hypotheses.
+- [x] Strict data model compliance conforming to BRAIN.md Section 7 hypothesis schema.
+- [x] Deterministic evidence scoring:
+  - Supporting evidence tally and line-level citations.
+  - Contradicting evidence tally and normal baseline checks.
+  - Missing evidence and unmonitored blindspot detection (e.g. missing thread dumps or metrics).
+- [x] Epistemic status assignment: `OBSERVED`, `CORRELATED`, `INFERRED`, `UNKNOWN`.
+- [x] Confidence calculation based on evidence density and corroboration.
+- [x] Ranking and sorting competing hypotheses.
+- [x] Generation of concrete diagnostic verification action items for engineers.
+- [x] Unit test suite covering hypothesis generation, scoring formulas, and evidence citations.
 
 ---
 
