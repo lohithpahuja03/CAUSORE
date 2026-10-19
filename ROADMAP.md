@@ -7,7 +7,7 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 ## DEVELOPMENT LIFECYCLE PHASES
 
 - [x] **✅ Phase 0 — Completed**
-- [ ] **Phase 1 — Public Website Foundation**
+- [x] **✅ Phase 1 — Completed**
 - [ ] **Phase 2 — Investigation Workspace UI**
 - [ ] **Phase 3 — Backend Foundation & Storage**
 - [ ] **Phase 4 — Evidence Ingestion & Parsing Engine**
@@ -38,20 +38,20 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 
 ---
 
-### ⬜ Phase 1 — Public Website Foundation
-- [ ] Modern Next.js TypeScript frontend setup.
-- [ ] CAUSORE branding and technical design tokens (dark-mode first, engineering aesthetic).
-- [ ] Navigation header with navigation anchors and primary action CTA ("Investigate an Incident").
-- [ ] Hero section articulating the value proposition and core product principle.
-- [ ] Problem section illustrating the pain points of fragmented manual investigation workflows.
-- [ ] Solution section visualizing the CAUSORE evidence-first paradigm.
-- [ ] "How It Works" section illustrating the 5-step lifecycle (Upload → Parse → Correlate → Investigate → Report).
-- [ ] Target Users section (SRE, DevOps, Platform, Backend, Incident Commanders).
-- [ ] Key Capabilities showcase (Evidence Ingestion, Timeline, Anomaly Detection, Hypothesis Scoring).
-- [ ] Differentiation section (Evidence-first vs generic chatbots, Fact vs Inference separation).
-- [ ] Limitations & Trust section (Uncertainty awareness, human verification).
-- [ ] Primary Call-to-Action and technical Footer.
-- [ ] Responsive layout, accessibility checks, and performance optimization.
+### ✅ Phase 1 — Completed
+- [x] Modern Next.js TypeScript frontend setup.
+- [x] CAUSORE branding and technical design tokens (dark-mode first, engineering aesthetic).
+- [x] Navigation header with navigation anchors and primary action CTA ("Investigate an Incident").
+- [x] Hero section articulating the value proposition and core product principle.
+- [x] Problem section illustrating the pain points of fragmented manual investigation workflows.
+- [x] Solution section visualizing the CAUSORE evidence-first paradigm and 16-stage pipeline.
+- [x] "How It Works" section illustrating the 5-step lifecycle (Upload → Parse → Correlate → Investigate → Report).
+- [x] Target Users section (SRE, DevOps, Platform, Backend, Incident Commanders).
+- [x] Key Capabilities showcase (Evidence Ingestion, Timeline, Anomaly Detection, Hypothesis Scoring).
+- [x] Differentiation section (Evidence-first vs generic chatbots, Fact vs Inference separation).
+- [x] Limitations & Trust section (Uncertainty awareness, human verification).
+- [x] Primary Call-to-Action and technical Footer.
+- [x] Responsive layout, accessibility checks, and production build optimization.
 
 ---
 
