@@ -13,7 +13,7 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 - [x] **✅ Phase 4 — Completed**
 - [x] **✅ Phase 5 — Completed**
 - [x] **✅ Phase 6 — Completed**
-- [ ] **Phase 7 — Dependency & Cross-Evidence Correlation Engine**
+- [x] **✅ Phase 7 — Completed**
 - [ ] **Phase 8 — Root-Cause Hypothesis Engine**
 - [ ] **Phase 9 — AI Investigation & Reasoning Layer**
 - [ ] **Phase 10 — Investigation Report Generation & Export**
@@ -141,13 +141,14 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 
 ---
 
-### ⬜ Phase 7 — Dependency & Cross-Evidence Correlation Engine
-- [ ] Directed graph representation of services and infrastructure dependencies.
-- [ ] Temporal proximity correlator (linking deployments and config changes to subsequent error spikes).
-- [ ] Causal propagation analysis (tracing errors from downstream services upstream to client-facing gateways).
-- [ ] Blast radius calculation (quantifying affected downstream services).
-- [ ] Cross-evidence correlation matrix (linking visual dashboard timestamps with log records).
-- [ ] Dependency graph REST APIs and visual interactive topology.
+### ✅ Phase 7 — Completed
+- [x] Directed graph representation of services and infrastructure dependencies using NetworkX.
+- [x] Blast radius calculation via graph traversal (identifying all directly and transitively impacted services).
+- [x] Causal propagation path finder tracing downstream failures to edge gateways.
+- [x] Temporal deployment correlator linking commit rollouts with initial deviation times.
+- [x] Downstream-to-upstream cascade correlator linking cross-service error propagation.
+- [x] Formal `CORRELATED` status assignment for all verified empirical links (BRAIN.md Principle 2 & 3).
+- [x] Unit test suite covering dependency topologies, blast radius, and cross-evidence correlation.
 
 ---
 
