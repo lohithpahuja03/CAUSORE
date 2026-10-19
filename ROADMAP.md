@@ -8,7 +8,7 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 
 - [x] **✅ Phase 0 — Completed**
 - [x] **✅ Phase 1 — Completed**
-- [ ] **Phase 2 — Investigation Workspace UI**
+- [x] **✅ Phase 2 — Completed**
 - [ ] **Phase 3 — Backend Foundation & Storage**
 - [ ] **Phase 4 — Evidence Ingestion & Parsing Engine**
 - [ ] **Phase 5 — Incident Timeline Engine**
@@ -55,15 +55,15 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
 
 ---
 
-### ⬜ Phase 2 — Investigation Workspace UI
-- [ ] Multi-step incident creation wizard:
+### ✅ Phase 2 — Completed
+- [x] Multi-step incident creation wizard:
   - Step 1: Incident metadata (Name, Severity, Environment, Start/End UTC timestamps, Affected Services).
-  - Step 2: Multi-format Evidence Dropzone (Logs, JSON, PDF reports, screenshots).
+  - Step 2: Multi-format Evidence Dropzone (Logs, JSON, PDF reports, screenshots) with file size limits and MIME filtering.
   - Step 3: Optional contextual inputs (Deployments, Dependency topologies, notes).
   - Step 4: Pre-investigation validation and parameter confirmation.
-- [ ] Investigation processing & real-time progress view:
+- [x] Investigation processing & real-time progress view:
   - Multi-stage deterministic pipeline status indicator (Parsing, Normalizing, Timeline, Anomalies, Hypotheses).
-- [ ] Comprehensive Results Interface:
+- [x] Comprehensive Results Interface:
   - Incident executive header with severity, blast radius, and duration metrics.
   - Interactive Incident Timeline with chronological filtering and event inspector.
   - Anomaly Detection view with statistical deviation indicators.
@@ -72,6 +72,7 @@ This document tracks the phased development of **CAUSORE** — Evidence-driven i
   - Service Dependency Graph visualizer.
   - Missing Evidence & Recommended Verification Actions checklist.
   - Export actions (Markdown, JSON, PDF).
+- [x] Pre-configured production sample dataset loader for instant demonstration.
 
 ---
 
