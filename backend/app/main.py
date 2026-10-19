@@ -40,6 +40,7 @@ app.include_router(investigations_router, prefix=settings.API_V1_STR)
 
 
 @app.get("/health", tags=["System"])
+@app.get(f"{settings.API_V1_STR}/health", tags=["System"])
 async def health_check():
     """System health check endpoint verifying backend liveness."""
     return {
